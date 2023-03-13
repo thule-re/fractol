@@ -1,5 +1,4 @@
-FRACTOLSRCS = ./src/hook.c ./src/color.c ./src/mandelbrot.c ./src/utils.c ./src/color_pallette.c
-# ./src/sierpinski.c
+FRACTOLSRCS = ./src/hook.c ./src/color.c ./src/mandelbrot.c ./src/utils.c ./src/color_pallette.c ./src/sierpinski.c ./src/julia.c
 # BONUSSRCS = ./src/
 
 LIBFT_DIR = ./libft
