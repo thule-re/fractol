@@ -20,6 +20,14 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 	*(unsigned int *)dst = color;
 }
 
+void	toggle(int *bool)
+{
+	if (*bool == 1)
+		*bool = 0;
+	else if (*bool == 0)
+		*bool = 1;
+}
+
 double	linear_scale(double n, double r_max, double t_min, double t_max)
 {
 	double	r_range;
