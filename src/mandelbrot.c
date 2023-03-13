@@ -14,6 +14,7 @@
 
 void	init_mandelbrot(t_data *data)
 {
+	data->fractal = 0;
 	data->min_re = -2.51;
 	data->max_re = 1.5;
 	data->min_im = -1.12;
@@ -22,8 +23,9 @@ void	init_mandelbrot(t_data *data)
 	data->color_set = 420;
 	data->lum_min = -3;
 	data->lum_max = 1.5;
-	data->lum = data->lum_min;
+	data->lum = -2;
 	data->lum_offset = 0.01;
+	data->animate = 0;
 }
 
 static int	calc(t_data *data, double x_cord, double y_cord)
@@ -78,6 +80,7 @@ int	put_mandelbrot(t_data *data)
 	mlx_put_image_to_window(data->mlx, data->mlx_win, data->img, 0, 0);
 	if (data->lum > data->lum_max || data->lum < data->lum_min)
 		data->lum_offset *= -1;
-	data->lum += data->lum_offset;
+	if (data->animate)
+		data->lum += data->lum_offset;
 	return (0);
 }
