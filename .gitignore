@@ -1,0 +1,4 @@
+*.o
+fractol.dSYM/*
+fractol
+.idea/*
