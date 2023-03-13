@@ -19,7 +19,9 @@ void	init(t_data *data)
 	data->img = mlx_new_image(data->mlx, WIDTH, HEIGHT);
 	data->addr = mlx_get_data_addr(data->img, &data->bits_per_pixel, \
 	&data->line_length, &data->endian);
-	mlx_hook(data->mlx_win, 2, 4, key_hook, data);
+	mlx_hook(data->mlx_win, ON_KEYDOWN, 0, key_hook, data);
+	mlx_hook(data->mlx_win, ON_DESTROY, 0, destroy_hook, data);
+	mlx_mouse_hook(data->mlx_win, mouse_hook, data);
 }
 
 int	main(int argc, char *argv[])
@@ -33,14 +35,16 @@ int	main(int argc, char *argv[])
 	}
 	init(&data);
 	if (ft_strncmp(argv[1], "mandelbrot", 10) == 0)
-	{
 		init_mandelbrot(&data);
-		mlx_loop_hook(data.mlx, put_mandelbrot, &data);
-	}
-	if (ft_strncmp(argv[1], "sierpinski", 10) == 0)
-	{
+	else if (ft_strncmp(argv[1], "julia", 10) == 0)
+		init_julia(&data);
+	else if (ft_strncmp(argv[1], "sierpinski", 10) == 0)
 		init_sierpinski(&data);
-		mlx_loop_hook(data.mlx, put_sierpinski, &data);
+	else
+	{
+		ft_printf("usage: fractol <mandelbrot|julia|sierpinski>\n");
+		exit(1);
 	}
+	mlx_loop_hook(data.mlx, loop_hook, &data);
 	mlx_loop(data.mlx);
 }
