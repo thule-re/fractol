@@ -33,6 +33,14 @@
 # define HEIGHT 540
 # define WIDTH  960
 
+# define ON_KEYDOWN 2
+# define ON_KEYUP 3
+# define ON_MOUSEDOWN 4
+# define ON_MOUSEUP 5
+# define ON_MOUSEMOVE 6
+# define ON_EXPOSE 12
+# define ON_DESTROY 17
+
 typedef struct s_data {
 	void	*img;
 	void	*mlx;
@@ -46,21 +54,33 @@ typedef struct s_data {
 	int		max_iteration;
 	int		color_set;
 	int		fractal;
-
-	double	min_re;
-	double	max_re;
-	double	min_im;
-	double	max_im;
 	double	lum;
 	double	lum_min;
 	double	lum_max;
 	double	lum_offset;
+	int		animate;
+
+	double	julia_re;
+	double	julia_im;
+	double	min_re;
+	double	max_re;
+	double	min_im;
+	double	max_im;
+
+
+	double	abc[3][2];
+	double	pos[2];
 }				t_data;
 
 
 // hook
 int		key_hook(int k, t_data *data);
 int		loop_hook(t_data *data);
+int		destroy_hook(t_data *data);
+int		mouse_hook(int k, int x, int y, t_data *data);
+
+// utils
+void	toggle(int *bool);
 
 // color
 int		get_trgb(double t, double r, double g, double b);
@@ -83,6 +103,10 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
 // mandelbrot
 void	init_mandelbrot(t_data *data);
 int		put_mandelbrot(t_data *data);
+
+// julia
+void	init_julia(t_data *data);
+int		put_julia(t_data *data);
 
 // sierpinski
 void	init_sierpinski(t_data *data);
