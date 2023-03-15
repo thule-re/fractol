@@ -38,7 +38,7 @@ double	linear_scale(double n, double r_max, double t_min, double t_max)
 	r_range = r_max;
 	t_range = t_max - t_min;
 	factor = t_range / r_range;
-	scaled = (n) * factor + t_min;
+	scaled = n * factor + t_min;
 	return (scaled);
 }
 
