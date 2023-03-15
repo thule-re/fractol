@@ -21,7 +21,7 @@ int	bw(t_data *data, int iteration)
 	r = linear_scale(iteration, data->max_iteration, 0, 1);
 	g = linear_scale(iteration, data->max_iteration, 0, 1);
 	b = linear_scale(iteration, data->max_iteration, 0, 1);
-	return (get_trgb(0, r, g, b));
+	return (get_trgb(r, g, b));
 }
 
 int	red(t_data *data, int iteration)
@@ -33,7 +33,7 @@ int	red(t_data *data, int iteration)
 	r = linear_scale(iteration, data->max_iteration, 0, 1);
 	g = 0;
 	b = 0;
-	return (get_trgb(0, r, g, b));
+	return (get_trgb(r, g, b));
 }
 
 int	green(t_data *data, int iteration)
@@ -45,7 +45,7 @@ int	green(t_data *data, int iteration)
 	r = 0;
 	g = linear_scale(iteration, data->max_iteration, 0, 1);
 	b = 0;
-	return (get_trgb(0, r, g, b));
+	return (get_trgb(r, g, b));
 }
 
 int	blue(t_data *data, int iteration)
@@ -57,7 +57,7 @@ int	blue(t_data *data, int iteration)
 	r = 0;
 	g = 0;
 	b = linear_scale(iteration, data->max_iteration, 0, 1);
-	return (get_trgb(0, r, g, b));
+	return (get_trgb(r, g, b));
 }
 
 int	trip(t_data *data, int iteration)
@@ -67,14 +67,12 @@ int	trip(t_data *data, int iteration)
 	double	g;
 	double	b;
 
-	t = (double)iteration / 255.0;
-	t = exponential_scale(iteration, data->max_iteration, data->lum);
-	r = 9.4 * (1 - t) * t * t * t;
-	g = 15.9 * (1 - t) * (1 - t) * t * t;
-	b = 9.4 * (1 - t) * (1 - t) * (1 - t) * t;
-
-
-	return (get_trgb(0, r, g, b));
+	// t = exponential_scale(iteration, data->max_iteration, data->lum);
+	t = linear_scale(iteration, data->max_iteration, 0, 1.0);
+	r = fmod(9.4 * (1 - t) * t * t * t, 1.0);
+	g = fmod(15.9 * (1 - t) * (1 - t) * t * t, 1.0);
+	b = fmod(9.4 * (1 - t) * (1 - t) * (1 - t) * t, 1.0);
+	return (get_trgb(r, g, b));
 }
 
 /*
