@@ -12,22 +12,6 @@
 
 #include "../include/fractol.h"
 
-void	init_mandelbrot(t_data *data)
-{
-	data->fractal = 0;
-	data->min_re = -2.51;
-	data->max_re = 1.5;
-	data->min_im = -1.12;
-	data->max_im = 1.12;
-	data->max_iteration = 100;
-	data->color_set = 420;
-	data->lum_min = -3;
-	data->lum_max = 1.5;
-	data->lum = -2;
-	data->lum_offset = 0.01;
-	data->animate = 0;
-}
-
 static int	calc(t_data *data, double x_cord, double y_cord)
 {
 	double	x;
@@ -45,7 +29,7 @@ static int	calc(t_data *data, double x_cord, double y_cord)
 	while (x * x + y * y <= 4.5 && i < data->max_iteration)
 	{
 		temp = x * x - y * y + x_cord;
-		y = 2 * x * y + y_cord;
+		y = (x + x) * y + y_cord;
 		x = temp;
 		i++;
 	}
