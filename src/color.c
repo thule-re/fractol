@@ -38,6 +38,8 @@ int	get_color(t_data *data, int iteration)
 		return (green(data, iteration));
 	if (data->color_set == 3)
 		return (blue(data, iteration));
+	if (data->color_set == 5)
+		return (colorful(data, iteration));
 	if (data->color_set == 4)
 		return (trip(data, iteration));
 	return (bw(data, iteration));
