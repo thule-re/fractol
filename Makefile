@@ -1,5 +1,14 @@
-FRACTOLSRCS = ./src/hook.c ./src/color.c ./src/mandelbrot.c ./src/utils.c ./src/color_pallette.c ./src/sierpinski.c ./src/julia.c
+NAME = fractol
+BONUS_NAME = fractol_bonus
+FLAGS = -Wall -Werror -Wextra -Ofast
+MLX_FLAGS = -framework OpenGL -framework AppKit -g
+
+FRACTOLSRCS = ./src/main.c ./src/hook.c ./src/color.c ./src/mandelbrot.c ./src/utils.c ./src/color_pallette.c ./src/julia.c ./src/tricorn.c ./src/zoom.c ./src/move.c ./src/init.c
 # BONUSSRCS = ./src/
+
+OBJS	= $(FRACTOLSRCS:.c=.o)
+
+INCL	= ./include/fractol.h ./include/keycodes.h
 
 LIBFT_DIR = ./libft
 LIBFT = ./libft/libft.a
@@ -7,34 +16,29 @@ LIBFT = ./libft/libft.a
 MLX_DIR = ./mlx
 MLX = ./mlx/libmlx.a
 
-NAME = fractol
-BONUS_NAME = fractol_bonus
-FLAGS = -Wall -Werror -Wextra -framework OpenGL -framework AppKit -g
-
 all: $(NAME)
 
-# bonus: $(BONUS_NAME)
+$(NAME): $(OBJS) $(MLX) $(LIBFT)
+	cc $(MLX_FLAGS) -o $(NAME) $(OBJS) $(MLX) $(LIBFT)
 
-$(NAME): $(MLX) $(LIBFT)
-	cc $(FLAGS) -o $(NAME) ./src/main.c $(FRACTOLSRCS) $(MLX) $(LIBFT)
-
-# $(BONUS_NAME): $(LIBFT)
-# 	cc $(FLAGS) -o $(BONUS_NAME) ./src/main_bonus.c $(BONUSSRCS) $(COMMONSRCS) $(LIBFT)
+%.o: %.c $(INCL)
+	cc -c $(FLAGS) $< -o ${<:.c=.o}
 
 $(LIBFT):
-	make -C $(LIBFT_DIR)
+	+make -C $(LIBFT_DIR)
 
 $(MLX):
-	make -C $(MLX_DIR)
+	+make -C $(MLX_DIR)
 
 clean:
-	make -C $(LIBFT_DIR) clean
-	make -C $(MLX_DIR) clean
+	rm -f $(OBJS)
+	+make -C $(LIBFT_DIR) clean
+	+make -C $(MLX_DIR) clean
 
 fclean: clean
-	make -C $(LIBFT_DIR) fclean
-	make -C $(MLX_DIR) clean
 	rm -f $(NAME)
+	+make -C $(LIBFT_DIR) fclean
+	+make -C $(MLX_DIR) clean
 
 re: fclean all
 
