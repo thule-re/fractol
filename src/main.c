@@ -12,37 +12,28 @@
 
 #include "../include/fractol.h"
 
-void	init(t_data *data)
-{
-	data->mlx = mlx_init();
-	data->mlx_win = mlx_new_window(data->mlx, WIDTH, HEIGHT, "fractol");
-	data->img = mlx_new_image(data->mlx, WIDTH, HEIGHT);
-	data->addr = mlx_get_data_addr(data->img, &data->bits_per_pixel, \
-	&data->line_length, &data->endian);
-	mlx_hook(data->mlx_win, ON_KEYDOWN, 0, key_hook, data);
-	mlx_hook(data->mlx_win, ON_DESTROY, 0, destroy_hook, data);
-	mlx_mouse_hook(data->mlx_win, mouse_hook, data);
-}
-
 int	main(int argc, char *argv[])
 {
 	t_data	data;
 
-	if (argc != 2)
+	if (argc < 2 || argc > 3)
 	{
-		ft_printf("usage: fractol <mandelbrot|julia|sierpinski>\n");
+		ft_printf("usage: fractol <mandelbrot|julia|tricorn> \
+				  <opt: julia start value>\n");
 		exit(1);
 	}
 	init(&data);
+	init_fractal(&data);
+	init_toggles(&data);
 	if (ft_strncmp(argv[1], "mandelbrot", 10) == 0)
-		init_mandelbrot(&data);
+		data.fractal = 0;
 	else if (ft_strncmp(argv[1], "julia", 10) == 0)
-		init_julia(&data);
-	else if (ft_strncmp(argv[1], "sierpinski", 10) == 0)
-		init_sierpinski(&data);
+		data.fractal = 1;
+	else if (ft_strncmp(argv[1], "tricorn", 10) == 0)
+		data.fractal = 2;
 	else
 	{
-		ft_printf("usage: fractol <mandelbrot|julia|sierpinski>\n");
+		ft_printf("usage: fractol <mandelbrot|julia|tricorn>\n");
 		exit(1);
 	}
 	mlx_loop_hook(data.mlx, loop_hook, &data);
