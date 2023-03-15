@@ -1,6 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
+/*   hook.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: treeps <treeps@student.42wolfsbur>         +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/03/09 16:14:01 by treeps            #+#    #+#             */
+/*   Updated: 2023/03/15 16:38:25 by treeps           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   hook.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: treeps <treeps@student.42wolfsbur>         +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/03/09 16:14:01 by treeps            #+#    #+#             */
+/*   Updated: 2023/03/15 16:30:06 by treeps           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
 /*   key_hook.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: treeps <treeps@student.42wolfsbur>         +#+  +:+       +#+        */
@@ -19,8 +43,23 @@ int	key_hook(int k, t_data *data)
 		mlx_destroy_image(data->mlx, data->img);
 		exit(0);
 	}
-	if (k == KEY_SPACE)
+	else if (k == KEY_SPACE)
 		toggle(&data->animate);
+	else if (k == KEY_U)
+		toggle(&data->unlock);
+	else if (k == KEY_R)
+		init_fractal(data);
+	else if (k == KEY_CLOSE_BRACE)
+		data->max_iteration += 5;
+	else if (k == KEY_SLASH)
+	{
+		if (data->max_iteration > 0)
+			data->max_iteration -= 5;
+	}
+	else if (k == KEY_1 || k == KEY_2 || k == KEY_3 || k == KEY_4 || k == KEY_6)
+		data->color_set = k - 18;
+	else if (k >= KEY_LEFT && k <= KEY_UP)
+		move(data, k - KEY_LEFT);
 	return (k);
 }
 
@@ -32,12 +71,21 @@ int	destroy_hook(t_data *data)
 
 int	loop_hook(t_data *data)
 {
+	int	x;
+	int	y;
+
+	if (data->unlock == 1)
+	{
+		mlx_mouse_get_pos(data->mlx_win, &x, &y);
+		data->julia_re = linear_scale(x, WIDTH, data->min_re, data->max_re);
+		data->julia_im = linear_scale(y, HEIGHT, data->min_im, data->max_im);
+	}
 	if (data->fractal == 0)
 		put_mandelbrot(data);
-	if (data->fractal == 1)
+	else if (data->fractal == 1)
 		put_julia(data);
-	if (data->fractal == 2)
-		put_sierpinski(data);
+	else if (data->fractal == 2)
+		put_tricorn(data);
 	return (0);
 }
 
@@ -48,5 +96,9 @@ int	mouse_hook(int k, int x, int y, t_data *data)
 		data->julia_re = linear_scale(x, WIDTH, data->min_re, data->max_re);
 		data->julia_im = linear_scale(y, HEIGHT, data->min_im, data->max_im);
 	}
+	if (k == 5)
+		zoom_increase(data, x, y);
+	if (k == 4)
+		zoom_decrease(data, x, y);
 	return (0);
 }
