@@ -75,7 +75,8 @@ typedef struct s_data {
 }				t_data;
 
 // init
-void	init(t_data *data);
+void	welcome(void);
+void	init_mlx(t_data *data);
 void	init_fractal(t_data *data);
 void	init_toggles(t_data *data);
 
@@ -88,6 +89,8 @@ int		mouse_hook(int k, int x, int y, t_data *data);
 // utils
 void	toggle(int *bool);
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
+void	input_handle(t_data *data, int argc, char **argv);
+int		is_number(char *str);
 
 // color
 int		get_trgb(double r, double g, double b);
@@ -97,6 +100,7 @@ int		red(t_data *data, int iteration);
 int		green(t_data *data, int iteration);
 int		blue(t_data *data, int iteration);
 int		trip(t_data *data, int iteration);
+int		colorful(t_data *data, int iteration);
 
 // math
 double	linear_scale(double n, double r_max, double t_min, double t_max);
