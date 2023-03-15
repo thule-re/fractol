@@ -66,7 +66,7 @@ int	loop_hook(t_data *data)
 		put_julia(data);
 	else if (data->fractal == 2)
 		put_tricorn(data);
-	if (data->animate && data->color_set == 6)
+	if (data->animate && data->color_set == 4)
 	{
 		if (data->lum > data->lum_max || data->lum < data->lum_min)
 			data->lum_offset *= -1;
