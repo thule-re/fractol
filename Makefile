@@ -3,8 +3,19 @@ BONUS_NAME = fractol_bonus
 FLAGS = -Wall -Werror -Wextra -Ofast
 MLX_FLAGS = -framework OpenGL -framework AppKit -g
 
-FRACTOLSRCS = ./src/main.c ./src/hook.c ./src/color.c ./src/mandelbrot.c ./src/utils.c ./src/color_pallette.c ./src/julia.c ./src/tricorn.c ./src/zoom.c ./src/move.c ./src/init.c
-# BONUSSRCS = ./src/
+FRACTOLSRCS = 	./src/main.c \
+				./src/hook.c \
+				./src/color.c \
+				./src/mandelbrot.c \
+				./src/utils.c \
+				./src/color_pallette.c \
+				./src/color_pallette2.c \
+				./src/julia.c \
+				./src/tricorn.c \
+				./src/zoom.c \
+				./src/move.c \
+				./src/init.c \
+				./src/error.c \
 
 OBJS	= $(FRACTOLSRCS:.c=.o)
 
