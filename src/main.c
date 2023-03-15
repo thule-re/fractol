@@ -16,26 +16,11 @@ int	main(int argc, char *argv[])
 {
 	t_data	data;
 
-	if (argc < 2 || argc > 3)
-	{
-		ft_printf("usage: fractol <mandelbrot|julia|tricorn> \
-				  <opt: julia start value>\n");
-		exit(1);
-	}
-	init(&data);
 	init_fractal(&data);
+	input_handle(&data, argc, argv);
 	init_toggles(&data);
-	if (ft_strncmp(argv[1], "mandelbrot", 10) == 0)
-		data.fractal = 0;
-	else if (ft_strncmp(argv[1], "julia", 10) == 0)
-		data.fractal = 1;
-	else if (ft_strncmp(argv[1], "tricorn", 10) == 0)
-		data.fractal = 2;
-	else
-	{
-		ft_printf("usage: fractol <mandelbrot|julia|tricorn>\n");
-		exit(1);
-	}
+	init_mlx(&data);
+	welcome();
 	mlx_loop_hook(data.mlx, loop_hook, &data);
 	mlx_loop(data.mlx);
 }
