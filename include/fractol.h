@@ -62,16 +62,22 @@ typedef struct s_data {
 
 	double	julia_re;
 	double	julia_im;
+	int		unlock;
+
 	double	min_re;
 	double	max_re;
 	double	min_im;
 	double	max_im;
-
+	double	zoom_factor;
 
 	double	abc[3][2];
 	double	pos[2];
 }				t_data;
 
+// init
+void	init(t_data *data);
+void	init_fractal(t_data *data);
+void	init_toggles(t_data *data);
 
 // hook
 int		key_hook(int k, t_data *data);
@@ -81,35 +87,31 @@ int		mouse_hook(int k, int x, int y, t_data *data);
 
 // utils
 void	toggle(int *bool);
+void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
 
 // color
-int		get_trgb(double t, double r, double g, double b);
+int		get_trgb(double r, double g, double b);
 int		get_color(t_data *data, int iteration);
 int		bw(t_data *data, int iteration);
 int		red(t_data *data, int iteration);
 int		green(t_data *data, int iteration);
 int		blue(t_data *data, int iteration);
 int		trip(t_data *data, int iteration);
-int		lch(t_data *data, int iteration);
-int		interpolate(t_data *data, int iteration, int col1, int col2);
 
 // math
 double	linear_scale(double n, double r_max, double t_min, double t_max);
 double	exponential_scale(double n, double r_max, double lum);
 
-// pixelput
-void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
+// move
+void	move(t_data *data, int dir);
 
-// mandelbrot
-void	init_mandelbrot(t_data *data);
+// zoom
+void	zoom_increase(t_data *data, int x, int y);
+void	zoom_decrease(t_data *data, int x, int y);
+
+// fractals
 int		put_mandelbrot(t_data *data);
-
-// julia
-void	init_julia(t_data *data);
 int		put_julia(t_data *data);
-
-// sierpinski
-void	init_sierpinski(t_data *data);
-int		put_sierpinski(t_data *data);
+int		put_tricorn(t_data *data);
 
 #endif
