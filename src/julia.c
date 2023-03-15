@@ -12,24 +12,6 @@
 
 #include "../include/fractol.h"
 
-void	init_julia(t_data *data)
-{
-	data->fractal = 1;
-	data->min_re = -2.51;
-	data->max_re = 1.5;
-	data->min_im = -1.12;
-	data->max_im = 1.12;
-	data->julia_re = 0.0;
-	data->julia_im = 0.0;
-	data->max_iteration = 100;
-	data->color_set = 420;
-	data->lum_min = -3;
-	data->lum_max = 1.5;
-	data->lum = -1.5;
-	data->lum_offset = 0.01;
-	data->animate = 0;
-}
-
 static int	calc(t_data *data, double x_cord, double y_cord)
 {
 	double	x;
@@ -45,7 +27,7 @@ static int	calc(t_data *data, double x_cord, double y_cord)
 	while (x * x + y * y <= 4.5 && i < data->max_iteration)
 	{
 		temp = x * x - y * y + data->julia_re;
-		y = 2 * x * y + data->julia_im;
+		y = (x + x) * y + data->julia_im;
 		x = temp;
 		i++;
 	}
