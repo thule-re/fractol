@@ -1,7 +1,7 @@
 NAME = fractol
 BONUS_NAME = fractol_bonus
-FLAGS = -Wall -Werror -Wextra -Ofast
-MLX_FLAGS = -framework OpenGL -framework AppKit -g
+FLAGS = -Wall -Werror -Wextra -Ofast -g -fsanitize=address
+MLX_FLAGS = -framework OpenGL -framework AppKit -g -fsanitize=address
 
 FRACTOLSRCS = 	./src/main.c \
 				./src/hook.c \
@@ -16,6 +16,7 @@ FRACTOLSRCS = 	./src/main.c \
 				./src/move.c \
 				./src/init.c \
 				./src/error.c \
+				./src/input.c \
 
 OBJS	= $(FRACTOLSRCS:.c=.o)
 
@@ -29,7 +30,7 @@ MLX = ./mlx/libmlx.a
 
 all: $(NAME)
 
-$(NAME): $(OBJS) $(MLX) $(LIBFT)
+$(NAME): $(MLX) $(LIBFT) $(OBJS)
 	cc $(MLX_FLAGS) -o $(NAME) $(OBJS) $(MLX) $(LIBFT)
 
 %.o: %.c $(INCL)
