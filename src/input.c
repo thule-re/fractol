@@ -43,7 +43,7 @@ void	welcome(void)
 	ft_printf("<r>                  reset\n");
 	ft_printf("<u>                  (un)lock julia\n");
 	ft_printf("<scroll>             zoom\n");
-	ft_printf("<left_click>         new julia constant when locked\n");
+	ft_printf("<left_click>         new julia constant\n");
 	ft_printf("<ESC>                exit program\n");
 	ft_printf("\n");
 }
