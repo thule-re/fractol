@@ -68,7 +68,7 @@ void	init_mlx(t_data *data);
 void	init_mandelbrot(t_data *data);
 void	init_julia(t_data *data);
 void	init_tricorn(t_data *data);
-void	reset_fractal(t_data *data);
+void	reset_fractal(t_data *data, int fractal);
 
 // hook
 int		key_hook(int k, t_data *data);

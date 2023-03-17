@@ -34,7 +34,7 @@ void	init_mandelbrot(t_data *data)
 	data->max_im = 1.12;
 	data->color_set = 1;
 	data->lum_min = -2.5;
-	data->lum_max = 2.5;
+	data->lum_max = 2.25;
 	data->lum = -1.3;
 	data->lum_offset = 0.1;
 	data->zoom_factor = 0.5;
@@ -54,7 +54,7 @@ void	init_julia(t_data *data)
 	data->julia_im = -0.277926;
 	data->color_set = 1;
 	data->lum_min = -2.5;
-	data->lum_max = 2.5;
+	data->lum_max = 2.25;
 	data->lum = -1.3;
 	data->lum_offset = 0.1;
 	data->zoom_factor = 0.5;
@@ -71,7 +71,7 @@ void	init_tricorn(t_data *data)
 	data->max_im = 1.757204;
 	data->color_set = 1;
 	data->lum_min = -2.5;
-	data->lum_max = 2.5;
+	data->lum_max = 2.25;
 	data->lum = -1.3;
 	data->lum_offset = 0.1;
 	data->zoom_factor = 0.5;
@@ -79,13 +79,13 @@ void	init_tricorn(t_data *data)
 	data->animate = 1;
 }
 
-void	reset_fractal(t_data *data)
+void	reset_fractal(t_data *data, int fractal)
 {
-	if (data->fractal == 0)
+	if (fractal == 0)
 		init_mandelbrot(data);
-	else if (data->fractal == 1)
+	else if (fractal == 1)
 		init_julia(data);
-	else if (data->fractal == 2)
+	else if (fractal == 2)
 		init_tricorn(data);
 }
 

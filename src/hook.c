@@ -21,19 +21,13 @@ int	key_hook(int k, t_data *data)
 	else if (k == KEY_U)
 		toggle(&data->unlock);
 	else if (k == KEY_R)
-		reset_fractal(data);
+		reset_fractal(data, data->fractal);
 	else if (k == KEY_A || k == KEY_S || k == KEY_D)
-	{
-		data->fractal = k;
-		reset_fractal(data);
-	}
+		reset_fractal(data, k);
 	else if (k == KEY_CLOSE_BRACE)
 		data->max_iteration += 5;
 	else if (k == KEY_SLASH)
-	{
-		if (data->max_iteration > 0)
-			data->max_iteration -= 5;
-	}
+		data->max_iteration -= 5;
 	else if (k >= KEY_1 && k <= KEY_5)
 		data->color_set = k - 18;
 	else if (k >= KEY_LEFT && k <= KEY_UP)
@@ -68,8 +62,8 @@ int	loop_hook(t_data *data)
 		put_tricorn(data);
 	if (data->animate && data->color_set == 4)
 	{
-		if (data->lum > data->lum_max || data->lum < data->lum_min)
-			data->lum_offset *= -1;
+		if (data->lum > data->lum_max)
+			data->lum = data->lum_min;
 		data->lum += data->lum_offset;
 	}
 	return (0);
