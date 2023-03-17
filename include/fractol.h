@@ -10,18 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   fractol.h                                          :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: treeps <treeps@student.42wolfsbur>         +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/07 15:35:14 by treeps            #+#    #+#             */
-/*   Updated: 2023/03/13 13:44:06 by treeps           ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #ifndef FRACTOL_H
 # define FRACTOL_H
 
@@ -77,8 +65,10 @@ typedef struct s_data {
 // init
 void	welcome(void);
 void	init_mlx(t_data *data);
-void	init_fractal(t_data *data);
-void	init_toggles(t_data *data);
+void	init_mandelbrot(t_data *data);
+void	init_julia(t_data *data);
+void	init_tricorn(t_data *data);
+void	reset_fractal(t_data *data);
 
 // hook
 int		key_hook(int k, t_data *data);
@@ -90,7 +80,7 @@ int		mouse_hook(int k, int x, int y, t_data *data);
 void	toggle(int *bool);
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
 void	input_handle(t_data *data, int argc, char **argv);
-int		is_number(char *str);
+void	err_exit(void);
 
 // color
 int		get_trgb(double r, double g, double b);
