@@ -35,8 +35,8 @@ static void	move_up(t_data *data)
 	double	scale;
 
 	scale = (data->max_im - data->min_im) / HEIGHT;
-	data->max_im += scale * 10;
-	data->min_im += scale * 10;
+	data->max_im -= scale * 10;
+	data->min_im -= scale * 10;
 }
 
 static void	move_down(t_data *data)
@@ -44,8 +44,8 @@ static void	move_down(t_data *data)
 	double	scale;
 
 	scale = (data->max_im - data->min_im) / HEIGHT;
-	data->max_im -= scale * 10;
-	data->min_im -= scale * 10;
+	data->max_im += scale * 10;
+	data->min_im += scale * 10;
 }
 
 void	move(t_data *data, int dir)
