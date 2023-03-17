@@ -60,6 +60,8 @@ static void	put_picture(t_data *data)
 
 int	put_tricorn(t_data *data)
 {
+	if (data->max_iteration <= 0)
+		data->max_iteration = 5;
 	put_picture(data);
 	mlx_put_image_to_window(data->mlx, data->mlx_win, data->img, 0, 0);
 	return (0);
