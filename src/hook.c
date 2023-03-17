@@ -15,18 +15,18 @@
 int	key_hook(int k, t_data *data)
 {
 	if (k == KEY_ESCAPE)
-	{
-		mlx_destroy_image(data->mlx, data->img);
-		exit(0);
-	}
+		destroy_hook(data);
 	else if (k == KEY_SPACE)
 		toggle(&data->animate);
 	else if (k == KEY_U)
 		toggle(&data->unlock);
 	else if (k == KEY_R)
-		init_fractal(data);
+		reset_fractal(data);
 	else if (k == KEY_A || k == KEY_S || k == KEY_D)
+	{
 		data->fractal = k;
+		reset_fractal(data);
+	}
 	else if (k == KEY_CLOSE_BRACE)
 		data->max_iteration += 5;
 	else if (k == KEY_SLASH)
@@ -34,7 +34,7 @@ int	key_hook(int k, t_data *data)
 		if (data->max_iteration > 0)
 			data->max_iteration -= 5;
 	}
-	else if (k == KEY_1 || k == KEY_2 || k == KEY_3 || k == KEY_4 || k == KEY_5 || k == KEY_6)
+	else if (k >= KEY_1 && k <= KEY_5)
 		data->color_set = k - 18;
 	else if (k >= KEY_LEFT && k <= KEY_UP)
 		move(data, k - KEY_LEFT);
@@ -79,8 +79,15 @@ int	mouse_hook(int k, int x, int y, t_data *data)
 {
 	if (k == 1)
 	{
-		data->julia_re = linear_scale(x, WIDTH, data->min_re, data->max_re);
-		data->julia_im = linear_scale(y, HEIGHT, data->min_im, data->max_im);
+		if (data->unlock == 1)
+			data->unlock = 0;
+		else
+		{
+			data->julia_re = linear_scale(x, WIDTH, \
+			data->min_re, data->max_re);
+			data->julia_im = linear_scale(y, HEIGHT, \
+			data->min_im, data->max_im);
+		}
 	}
 	if (k == 5)
 		zoom_increase(data, x, y);
