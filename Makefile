@@ -1,7 +1,11 @@
 NAME = fractol
-BONUS_NAME = fractol_bonus
-FLAGS = -Wall -Werror -Wextra -Ofast -g -fsanitize=address
-MLX_FLAGS = -framework OpenGL -framework AppKit -g -fsanitize=address
+
+OFLAGS = -Wall -Werror -Wextra -Ofast
+
+LIBX11 = /usr/lib/x86_64-linux-gnu/libX11.so
+LIBXEXT = /usr/lib/x86_64-linux-gnu/libXext.so
+LIBZ = /usr/lib/x86_64-linux-gnu/libz.so
+LIBM = /usr/lib/x86_64-linux-gnu/libm.so
 
 FRACTOLSRCS = 	./src/main.c \
 				./src/hook.c \
@@ -25,16 +29,16 @@ INCL	= ./include/fractol.h ./include/keycodes.h
 LIBFT_DIR = ./libft
 LIBFT = ./libft/libft.a
 
-MLX_DIR = ./mlx
-MLX = ./mlx/libmlx.a
+MLX_DIR = ./mlx_linux
+MLX = ./mlx_linux/libmlx.a
 
 all: $(NAME)
 
 $(NAME): $(MLX) $(LIBFT) $(OBJS)
-	cc $(MLX_FLAGS) -o $(NAME) $(OBJS) $(MLX) $(LIBFT)
+	cc $(LFLAGS) -o $(NAME) $(OBJS) $(MLX) $(LIBFT) $(LIBX11) $(LIBXEXT) $(LIBZ) $(LIBM)
 
 %.o: %.c $(INCL)
-	cc -c $(FLAGS) $< -o ${<:.c=.o}
+	cc -c $(OFLAGS) $< -o ${<:.c=.o}
 
 $(LIBFT):
 	+make -C $(LIBFT_DIR)
