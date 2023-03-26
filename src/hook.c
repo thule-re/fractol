@@ -24,14 +24,14 @@ int	key_hook(int k, t_data *data)
 		reset_fractal(data, data->fractal);
 	else if (k == KEY_A || k == KEY_S || k == KEY_D)
 		reset_fractal(data, k);
-	else if (k == KEY_CLOSE_BRACE)
+	else if (k == KEY_PLUS)
 		data->max_iteration += 5;
-	else if (k == KEY_SLASH)
+	else if (k == KEY_MINUS)
 		data->max_iteration -= 5;
-	else if (k >= KEY_1 && k <= KEY_5)
-		data->color_set = k - 18;
-	else if (k >= KEY_LEFT && k <= KEY_UP)
-		move(data, k - KEY_LEFT);
+	else if (k >= KEY_1 && k <= KEY_6)
+		data->color_set = k - KEY_1;
+	else if (k >= KEY_LEFT && k <= KEY_DOWN)
+		move(data, k);
 	return (k);
 }
 
@@ -50,9 +50,15 @@ int	loop_hook(t_data *data)
 
 	if (data->unlock)
 	{
-		mlx_mouse_get_pos(data->mlx_win, &x, &y);
+		mlx_mouse_get_pos(data->mlx, data->mlx_win, &x, &y);
 		data->julia_re = linear_scale(x, WIDTH, data->min_re, data->max_re);
 		data->julia_im = linear_scale(y, HEIGHT, data->min_im, data->max_im);
+	}
+	if (data->animate && data->color_set == 5)
+	{
+		if (data->lum > data->lum_max)
+			data->lum = data->lum_min;
+		data->lum += data->lum_offset;
 	}
 	if (data->fractal == 0)
 		put_mandelbrot(data);
@@ -60,12 +66,6 @@ int	loop_hook(t_data *data)
 		put_julia(data);
 	else if (data->fractal == 2)
 		put_tricorn(data);
-	if (data->animate && data->color_set == 4)
-	{
-		if (data->lum > data->lum_max)
-			data->lum = data->lum_min;
-		data->lum += data->lum_offset;
-	}
 	return (0);
 }
 

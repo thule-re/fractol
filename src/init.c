@@ -10,18 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   init.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: treeps <treeps@student.42wolfsbur>         +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/15 16:37:25 by treeps            #+#    #+#             */
-/*   Updated: 2023/03/15 18:42:18 by treeps           ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../include/fractol.h"
 
 void	init_mandelbrot(t_data *data)
@@ -81,11 +69,11 @@ void	init_tricorn(t_data *data)
 
 void	reset_fractal(t_data *data, int fractal)
 {
-	if (fractal == 0)
+	if (fractal == 0 || fractal == KEY_A)
 		init_mandelbrot(data);
-	else if (fractal == 1)
+	else if (fractal == 1 || fractal == KEY_S)
 		init_julia(data);
-	else if (fractal == 2)
+	else if (fractal == 2 || fractal == KEY_D)
 		init_tricorn(data);
 }
 
@@ -96,7 +84,7 @@ void	init_mlx(t_data *data)
 	data->img = mlx_new_image(data->mlx, WIDTH, HEIGHT);
 	data->addr = mlx_get_data_addr(data->img, &data->bits_per_pixel, \
 	&data->line_length, &data->endian);
-	mlx_hook(data->mlx_win, ON_KEYDOWN, 0, key_hook, data);
+	mlx_hook(data->mlx_win, ON_KEYDOWN, 1, key_hook, data);
 	mlx_hook(data->mlx_win, ON_DESTROY, 0, destroy_hook, data);
 	mlx_mouse_hook(data->mlx_win, mouse_hook, data);
 	mlx_do_key_autorepeaton(data->mlx);

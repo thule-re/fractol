@@ -50,12 +50,12 @@ static void	move_down(t_data *data)
 
 void	move(t_data *data, int dir)
 {
-	if (dir == 0)
+	if (dir == KEY_LEFT)
 		move_left(data);
-	else if (dir == 1)
+	else if (dir == KEY_RIGHT)
 		move_right(data);
-	else if (dir == 2)
+	else if (dir == KEY_DOWN)
 		move_down(data);
-	else if (dir == 3)
+	else if (dir == KEY_UP)
 		move_up(data);
 }
