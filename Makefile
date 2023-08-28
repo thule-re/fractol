@@ -2,10 +2,16 @@ NAME = fractol
 
 OFLAGS = -Wall -Werror -Wextra -Ofast
 
-LIBX11 = /usr/lib/x86_64-linux-gnu/libX11.so
-LIBXEXT = /usr/lib/x86_64-linux-gnu/libXext.so
-LIBZ = /usr/lib/x86_64-linux-gnu/libz.so
-LIBM = /usr/lib/x86_64-linux-gnu/libm.so
+UNAME_S = $(shell uname -s)
+ifeq ($(UNAME_S), Darwin)
+	X11		=	-L/usr/X11/lib -lX11 -lXext -lm
+else
+	LIBX11	= /usr/lib/x86_64-linux-gnu/libX11.so
+	LIBXEXT	= /usr/lib/x86_64-linux-gnu/libXext.so
+	LIBZ	= /usr/lib/x86_64-linux-gnu/libz.so
+	LIBM	= /usr/lib/x86_64-linux-gnu/libm.so
+	X11		= $(LIBX11) $(LIBXEXT) $(LIBZ) $(LIBM)
+endif
 
 FRACTOLSRCS = 	./src/main.c \
 				./src/hook.c \
@@ -35,7 +41,7 @@ MLX = ./mlx_linux/libmlx.a
 all: $(NAME)
 
 $(NAME): $(MLX) $(LIBFT) $(OBJS)
-	cc $(LFLAGS) -o $(NAME) $(OBJS) $(MLX) $(LIBFT) $(LIBX11) $(LIBXEXT) $(LIBZ) $(LIBM)
+	cc $(LFLAGS) -o $(NAME) $(OBJS) $(MLX) $(LIBFT) $(X11)
 
 %.o: %.c $(INCL)
 	cc -c $(OFLAGS) $< -o ${<:.c=.o}
